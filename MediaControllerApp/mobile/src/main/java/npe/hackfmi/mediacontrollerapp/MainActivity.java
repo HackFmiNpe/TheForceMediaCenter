@@ -2,36 +2,64 @@ package npe.hackfmi.mediacontrollerapp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import npe.hackfmi.mediacontrollerapp.tasks.InitialiseAsyncTask;
+
 public class MainActivity extends Activity {
+
+    private InitialiseAsyncTask mAsyncTask;
+    private int mInterval = 5000;
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        try {
+            Class.forName("android.os.AsyncTask");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-        return super.onOptionsItemSelected(item);
+        mHandler = new Handler();
+    }
+
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            sendFake();
+            mHandler.postDelayed(mStatusChecker, mInterval);
+        }
+    };
+
+    private void sendFake() {
+        mAsyncTask.addRequest("open");
+    }
+
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAsyncTask = new InitialiseAsyncTask();
+        mAsyncTask.execute();
+        startRepeatingTask();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAsyncTask.stop();
     }
 }
