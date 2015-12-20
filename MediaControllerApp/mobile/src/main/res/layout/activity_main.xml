@@ -1,11 +1,37 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView android:id="@+id/textview_ox"
+        android:text="Ox" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</RelativeLayout>
+    <npe.hackfmi.mediacontrollerapp.GraphView
+        android:id="@+id/graphview_ox"
+        android:layout_width="match_parent"
+        android:layout_height="250px" />
+
+    <TextView android:id="@+id/textview_oy"
+        android:text="Oy" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <npe.hackfmi.mediacontrollerapp.GraphView
+        android:id="@+id/graphview_oy"
+        android:layout_width="match_parent"
+        android:layout_height="250px" />
+
+    <TextView android:id="@+id/textview_oz"
+        android:text="Oz" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <npe.hackfmi.mediacontrollerapp.GraphView
+        android:id="@+id/graphview_oz"
+        android:layout_width="match_parent"
+        android:layout_height="250px" />
+
+</LinearLayout>
