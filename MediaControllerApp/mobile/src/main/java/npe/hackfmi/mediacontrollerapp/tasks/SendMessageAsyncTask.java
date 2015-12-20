@@ -32,8 +32,9 @@ public class SendMessageAsyncTask extends TimerTask {
                 out = new OutputStreamWriter(mSocket.getOutputStream(), StandardCharsets.UTF_8);
                 String message = mQueue.pop().toString();
                 Log.v("tag", "IS THIS WORKING?? sending " + message);
-                out.write(message);
+                out.write(message + "\n");
                 Log.v("tag", "MESSAGE = " + message);
+                out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }

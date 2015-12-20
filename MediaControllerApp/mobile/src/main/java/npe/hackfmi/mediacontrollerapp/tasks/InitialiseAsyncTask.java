@@ -19,7 +19,7 @@ import java.util.Timer;
  */
 public class InitialiseAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private static final String             DST_ADDRESS     = "192.168.0.123";
+    private static final String             DST_ADDRESS     = "192.168.0.105";
     private static final int                DST_PORT        = 49155;
     public static final int                 TIMEOUT         = 30 * 1000; // half a minute
     private static final long               PERIOD_MILLIS   = 33;
@@ -35,26 +35,8 @@ public class InitialiseAsyncTask extends AsyncTask<Void, Void, Void> {
 
             mSocket = new Socket(DST_ADDRESS, DST_PORT);
 
-            OutputStreamWriter out;
-            try {
-                out = new OutputStreamWriter(mSocket.getOutputStream(), StandardCharsets.UTF_8);
-                //Log.v("tag", "IS THIS WORKING?? sending " + message);
-                out.write("{\"alabala\":12}");
-                out.flush();
-                Log.v("tag", "SENT!!");
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-
-
-
-
-
-            //mTimer = new Timer();
-            //mTimer.schedule(new SendMessageAsyncTask(mSocket, mQueue), 0, PERIOD_MILLIS);
+            mTimer = new Timer();
+            mTimer.schedule(new SendMessageAsyncTask(mSocket, mQueue), 0, PERIOD_MILLIS);
         } catch (IOException e) {
             e.printStackTrace();
             try {

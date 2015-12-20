@@ -11,9 +11,14 @@ import npe.hackfmi.mediacontrollerapp.tasks.InitialiseAsyncTask;
 
 public class MainActivity extends Activity {
 
-    private InitialiseAsyncTask mAsyncTask;
-    private int mInterval = 5000;
-    private Handler mHandler;
+    private static InitialiseAsyncTask mAsyncTask;
+    private static final int mInterval = 5000;
+    private static Handler mHandler;
+
+    public static void sendMessage(String message) {
+        Log.v("tag", "RECEIVED MESSAGE! " + message);
+        mAsyncTask.addRequest(message);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,7 @@ public class MainActivity extends Activity {
         mHandler = new Handler();
     }
 
-    Runnable mStatusChecker = new Runnable() {
+    private static Runnable mStatusChecker = new Runnable() {
         @Override
         public void run() {
             sendFake();
@@ -37,15 +42,15 @@ public class MainActivity extends Activity {
         }
     };
 
-    private void sendFake() {
+    private static void sendFake() {
         mAsyncTask.addRequest("open");
     }
 
-    void startRepeatingTask() {
+    private static void startRepeatingTask() {
         mStatusChecker.run();
     }
 
-    void stopRepeatingTask() {
+    private static void stopRepeatingTask() {
         mHandler.removeCallbacks(mStatusChecker);
     }
 
