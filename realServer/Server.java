@@ -92,27 +92,11 @@ public class Server {
         if (!hasSelection) {
           openMyComputer(r);
         } else {
-          // hit enter
-          r.keyPress(KeyEvent.VK_ENTER);
-          r.keyRelease(KeyEvent.VK_ENTER);
-
-          try {
-            Thread.sleep(3000);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-          System.out.println("Folder opened.");
-
-          // hit right
-          r.keyPress(KeyEvent.VK_RIGHT);
-          r.keyRelease(KeyEvent.VK_RIGHT);
-
-          r.keyPress(KeyEvent.VK_DOWN);
-          r.keyRelease(KeyEvent.VK_DOWN);
+          openDirectory(r);
         }
       } else {
         // open movie file
-        startPlayingMovie(fullName);
+        openMovie(fullName, r);
       }
       break;
     case "close":
@@ -135,6 +119,26 @@ public class Server {
     }
   }
 
+  private static void openDirectory(Robot r) {
+    // hit enter
+    r.keyPress(KeyEvent.VK_ENTER);
+    r.keyRelease(KeyEvent.VK_ENTER);
+
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    System.out.println("Folder opened.");
+
+    // hit right
+    r.keyPress(KeyEvent.VK_RIGHT);
+    r.keyRelease(KeyEvent.VK_RIGHT);
+
+    r.keyPress(KeyEvent.VK_DOWN);
+    r.keyRelease(KeyEvent.VK_DOWN);
+  }
+
   private static void closeMovie(Robot r) {
     // call omxplayer close - play -- omxplayer --name fullName
     r.keyPress(KeyEvent.VK_ALT);
@@ -144,6 +148,11 @@ public class Server {
     if (hasSelection) {
       hasSelection = false;
     }
+
+    r.keyPress(KeyEvent.VK_ALT);
+    r.keyPress(KeyEvent.VK_TAB);
+    r.keyRelease(KeyEvent.VK_ALT);
+    r.keyRelease(KeyEvent.VK_TAB);
   }
 
   private static void volumeDown(Robot r) {
@@ -167,8 +176,13 @@ public class Server {
     r.keyRelease(KeyEvent.VK_UP);
   }
 
-  private static void startPlayingMovie(String fullName) {
+  private static void openMovie(String fullName, Robot r) {
     executeOnCommandLine("omxplayer -r -o hdmi " + fullName);
+
+    r.keyPress(KeyEvent.VK_ALT);
+    r.keyPress(KeyEvent.VK_TAB);
+    r.keyRelease(KeyEvent.VK_ALT);
+    r.keyRelease(KeyEvent.VK_TAB);
   }
 
   private static void openMyComputer(Robot r) {

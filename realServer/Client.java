@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class Client {
   public static void main(String[] args) throws Exception {
-//    String str = "{\"gesture\":\"open\"}";
+    String str = "{\"gesture\":\"open\"}";
     
     // implement go back
     
@@ -22,7 +22,7 @@ public class Client {
 //    String str = "{\"gesture\":\"vol_down\"}";
 //    
 //    String str = "{\"gesture\":\"forward\"}";
-    String str = "{\"gesture\":\"backward\"}";
+//    String str = "{\"gesture\":\"backward\"}";
 //    
 //    String str = "{\"gesture\":\"close\"}";
 
